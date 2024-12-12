@@ -1,0 +1,50 @@
+.navbar{
+    width: 100%;
+    z-index: 10;
+    margin: 0;
+    top: 0;
+    left: 0;
+    padding: 5px;
+    height: fit-content;
+    display: flex;
+    background-color: white;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box
+}
+
+.navbarItems{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbarItems button{
+    border: none;
+    cursor: pointer;
+    background-color: #22bb33;
+    color: white;
+    height: 2rem;
+    width: 4rem;
+    border-radius: 7px;
+}
+
+.navbarItems button:hover{
+    background-color: #229033;
+}
+
+.navbarClickable {
+    color: darkgreen;
+    cursor: pointer;
+}
+
+.navbarClickable:hover{
+    color: black;
+}
+
+.navLogo{
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    text-align: center;
+    cursor: pointer;
+}

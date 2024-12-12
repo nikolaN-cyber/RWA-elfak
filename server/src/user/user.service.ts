@@ -29,5 +29,13 @@ export class UserService {
         newUser.imagePath = user.imagePath;
         return await this.userRepository.save(newUser);
     }
+
+    async findByEmail(email : string) : Promise<User | undefined> {
+        return this.userRepository.findOneBy({email});
+    }
+
+    async comparePasswords(password : string, hashedPassword : string) : Promise<boolean> {
+        return bcrypt.compare(password, hashedPassword);
+    }
 }
 

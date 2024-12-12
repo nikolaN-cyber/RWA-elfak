@@ -1,7 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Role } from 'src/enums/roles';
 import { EventRegistration } from 'src/event-registration/Entities/event-registration.entity';
-import { Report } from 'src/report/Entities/report.entity';
 
 @Entity()
 export class User {
@@ -34,7 +33,4 @@ export class User {
 
     @OneToMany(() => EventRegistration, (eventRegistration) => eventRegistration.user)
     eventRegistrations: EventRegistration[];
-
-    @OneToMany(() => Report, (report) => report.userReports)
-    reports: Report[];
 }

@@ -1,0 +1,9 @@
+.home-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  background-image: url('/images/pexels-bertellifotografia-29509531.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
