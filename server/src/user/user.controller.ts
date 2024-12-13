@@ -1,7 +1,9 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { UserDTO } from "./DTOs/userDTO";
 import { User } from "./Entities/user.entity";
+import { UserUpdateDTO } from "./DTOs/userUpdateDto";
+import { LocalAuthGuard } from "src/auth/local-auth.guard";
 
 @Controller('user')
 export class UserController{
@@ -10,5 +12,10 @@ export class UserController{
     @Post('register')
     async registerUser(@Body() user : UserDTO) : Promise<User> {
         return this.userService.CreateUser(user);
+    }
+
+    @Put('update/:id')
+    async updateUser(@Param('id') id: number,@Body() userUpdate: UserUpdateDTO){
+        return this.userService.UpdateUser(id, userUpdate);
     }
 }

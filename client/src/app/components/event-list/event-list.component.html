@@ -1,1 +1,5 @@
-<p>event-list works!</p>
+<div *ngIf="errorMessage">{{ errorMessage }}</div>
+<div *ngFor="let event of events">
+  <div>{{ event.name }}</div>
+  <div>{{ event.date }}</div>
+</div>
