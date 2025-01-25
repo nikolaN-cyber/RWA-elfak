@@ -17,3 +17,13 @@ export interface UpdateUser {
     phoneNumber: string;
     imagePath: string;
 }
+
+export interface RegisterUser {
+    name: string;
+    lastName: string;
+    phone: string;
+    address: string;
+    email: string;
+    password: string;
+    imagePath: string;
+}

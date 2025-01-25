@@ -1,0 +1,46 @@
+.event-list-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .error-message {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .event-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .event-table th, .event-table td {
+    text-align: left;
+    padding: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  .event-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .event-table td {
+    font-size: 1rem;
+  }
+  
+  .event-table button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .event-table button:hover {
+    background-color: #0056b3;
+  }
+  

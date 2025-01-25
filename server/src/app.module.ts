@@ -11,23 +11,35 @@ import { AuthModule } from './auth/auth.module';
 import { EventTypeModule } from './event-type/event-type.module';
 import { EventModule } from './event/event.module';
 import { EventRegistrationModule } from './event-registration/event-registration.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
-    type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'postgres',
-    password: 'Nikola24@',
-    database: 'Event_planner',
-    entities: [User, Event, EventRegistration, EventType],
-    synchronize: true,
-  }),
+  imports: [
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        const isDocker = configService.get<string>('ENV', 'local') === 'docker';
+        return {
+          type: 'postgres',
+          host: isDocker
+            ? configService.get<string>('DATABASE_HOST', 'db')
+            : configService.get<string>('LOCAL_DATABASE_HOST', 'localhost'),
+          port: configService.get<number>('DATABASE_PORT', 5432),
+          username: configService.get<string>('DATABASE_USERNAME', 'postgres'),
+          password: configService.get<string>('DATABASE_PASSWORD', 'Nikola24@'),
+          database: configService.get<string>('DATABASE_NAME', 'eventplanner'),
+          entities: [User, Event, EventRegistration, EventType],
+          synchronize: true,
+        };
+      },
+      inject: [ConfigService],
+    }),
     UserModule,
     AuthModule,
     EventTypeModule,
     EventModule,
-    EventRegistrationModule
+    EventRegistrationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,18 +1,29 @@
 import { Component } from '@angular/core';
-import { NavbarDropdownComponent } from '../navbar-dropdown/navbar-dropdown.component';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [NavbarDropdownComponent, RouterModule],
+  imports: [RouterModule, MatIconButton, MatIcon],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-    constructor(private router: Router){}
+  constructor(
+    private authService: AuthService,
+    private router: Router 
+  ) {}
 
-    navigateToLogin(){
-      this.router.navigate(['/login']);
+  async onLogout() {
+    try {
+      await this.authService.logout();
+      this.router.navigate(['/']);
+    } catch (error) {
+      console.error('Logout failed', error);
     }
+  }
 }

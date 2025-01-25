@@ -1,15 +1,12 @@
 <nav class="navbar">
-
     <div routerLink="/" class="navLogo">EventPlanner</div>
-
     <div class="navbarItems">
-        <button (click)="navigateToLogin()">Login</button>
         <div routerLink="/eventlist" class="navbarClickable">Events</div>
-        <div routerLink="/about" class="navbarClickable">About</div>
         <div routerLink="/reports" class="navbarClickable">Reports</div>
         <div routerLink="/myprofile" class="navbarClickable">My profile</div>
         <div routerLink="/myevents" class="navbarClickable">My events</div>
         <div routerLink="/admindashboard" class="navbarClickable">Admin dashboard</div>
-        <button>Logout</button>
+        <mat-icon class="notification-active">notifications_active</mat-icon>
+        <button (click)="onLogout()">Logout</button>
     </div>
 </nav>

@@ -21,4 +21,14 @@ export class AuthController {
 
     return { user, message: 'Login successful' };
   }
+  @Post('logout')
+    async logout(@Res({ passthrough: true }) res: Response) {
+        res.clearCookie('access_token', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+        });
+
+        return { message: 'Logout successful' };
+    }
 }

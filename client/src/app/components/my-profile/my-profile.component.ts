@@ -4,11 +4,16 @@ import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
+import { of, switchMap } from 'rxjs';
+import {MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-my-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatCardModule],
   templateUrl: './my-profile.component.html',
   styleUrl: './my-profile.component.css'
 })
@@ -41,15 +46,32 @@ export class MyProfileComponent implements OnInit {
   }
 
 
-  async updateUser() {
+  updateUser() {
     if (this.user) {
-      try {
-        const updatedUser = await this.userService.UpdateUser(this.user.id!, this.userUpdate);
-        this.user = updatedUser;
-        console.log('User updated successfully', updatedUser);
-      } catch (error) {
-        console.error('Error updating user', error);
+      const confirmUpdate = window.confirm('Are you sure you want to update your profile?');
+      if (!confirmUpdate) {
+        return;
       }
+      this.authService.getCurrentUser()
+        .pipe(
+          switchMap(user => {
+            if (!user) {
+              return of(null);
+            }
+            return this.userService.UpdateUser(user.id!, this.userUpdate);
+          })
+        )
+        .subscribe({
+          next: updatedUser => {
+            if (updatedUser) {
+              this.user = updatedUser;
+              console.log('User updated successfully', updatedUser);
+            }
+          },
+          error: error => {
+            console.error('Error updating user', error);
+          }
+        });
     }
   }
 

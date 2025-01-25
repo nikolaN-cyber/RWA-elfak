@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavbarDropdownComponent } from './navbar-dropdown.component';
+import { AdminEventTypesComponent } from './admin-event-types.component';
 
-describe('NavbarDropdownComponent', () => {
-  let component: NavbarDropdownComponent;
-  let fixture: ComponentFixture<NavbarDropdownComponent>;
+describe('AdminEventTypesComponent', () => {
+  let component: AdminEventTypesComponent;
+  let fixture: ComponentFixture<AdminEventTypesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavbarDropdownComponent]
+      imports: [AdminEventTypesComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NavbarDropdownComponent);
+    fixture = TestBed.createComponent(AdminEventTypesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

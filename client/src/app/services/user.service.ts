@@ -1,4 +1,4 @@
-import { UpdateUser, User } from "../Models/user.model";
+import { UpdateUser, User, RegisterUser } from "../Models/user.model";
 import { environment } from "../../environments/environment";
 import { Injectable } from "@angular/core";
 
@@ -19,7 +19,7 @@ export class UserService {
                 },
                 body: JSON.stringify(updateUser),
             });
-            if (!response.ok){
+            if (!response.ok) {
                 throw new Error("Failed to update user!");
             }
             const updatedUser = await response.json();
@@ -27,6 +27,25 @@ export class UserService {
 
         } catch (error) {
             console.log("Failed to update user!");
+            throw error;
+        }
+    }
+
+    async RegisterUser(user: RegisterUser): Promise<any> {
+        try {
+            const response = await fetch(`${environment.api}/user/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user),
+            });
+            if (!response.ok){
+                throw new Error("Failed to create user!");
+            }
+            return "User registered successfully";
+
+        } catch (error) {
             throw error;
         }
     }

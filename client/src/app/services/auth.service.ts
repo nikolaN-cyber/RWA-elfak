@@ -41,6 +41,27 @@ export class AuthService {
     }
   }
 
+  async logout() {
+    try {
+      const response = await fetch(`${environment.api}/auth/logout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        throw new Error('Logout failed');
+      }
+      this.clearUserFromCookie();
+      this.userSubject.next(null);
+    } catch (error) {
+      console.error('Logout error:', error);
+      throw error;
+    }
+  }
+
   private setUserInCookie(user: User) {
     document.cookie = `user=${JSON.stringify(user)}; path=/; max-age=3600`;
   }
@@ -59,6 +80,10 @@ export class AuthService {
       }
     }
     return null;
+  }
+
+  private clearUserFromCookie() {
+    document.cookie = 'user=; path=/; max-age=0';
   }
 
   getCurrentUser(): Observable<User | null> {

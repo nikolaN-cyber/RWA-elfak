@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
+import { selectAllEvents, selectEventError, selectEventLoading } from '../../store/event/event.selector';
+import { Store } from '@ngrx/store';
+import { loadEvents } from '../../store/event/event.actions';
 import { Event } from '../../Models/event.model';
 import { Router } from '@angular/router';
-import { EventService } from '../../services/event.service';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-event-list',
@@ -12,21 +15,20 @@ import { CommonModule } from '@angular/common';
   styleUrl: './event-list.component.css'
 })
 export class EventListComponent implements OnInit {
-    events: Event[] = [];
-    errorMessage: string = "";
+  events$: Observable<Event[]> = this.store.select(selectAllEvents);
+  errorMessage$: Observable<string | null> = this.store.select(selectEventError);
+  loading$: Observable<boolean> = this.store.select(selectEventLoading);
 
-    constructor(private eventService: EventService, private router: Router){}
+  constructor(private store: Store, private router: Router) { }
 
-    ngOnInit() :void {
-      this.loadEvents();
+  ngOnInit() {
+    console.log('Dispatching loadEvents action');
+    this.store.dispatch(loadEvents());
+  }
+
+  goToEventDetail(eventId: number): void {
+    if (eventId !== undefined) {
+      this.router.navigate(['/event', eventId]);
     }
-
-    async loadEvents() : Promise<void> {
-      try {
-        this.events = await this.eventService.getEvents();
-      } catch (error) {
-        this.errorMessage = "Error loading events!";
-        console.log(error);
-      }
-    }
+  }
 }

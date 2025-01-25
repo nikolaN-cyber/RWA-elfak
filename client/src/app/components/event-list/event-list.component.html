@@ -1,5 +1,29 @@
-<div *ngIf="errorMessage">{{ errorMessage }}</div>
-<div *ngFor="let event of events">
-  <div>{{ event.name }}</div>
-  <div>{{ event.date }}</div>
-</div>
+<div *ngIf="errorMessage$ | async as errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+  
+  <table *ngIf="events$ | async as events" class="event-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Date</th>
+        <th>Capacity</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of events">
+        <td>{{ event.name }}</td>
+        <td>{{ event.location }}</td>
+        <td>{{ event.date }}</td>
+        <td>{{ event.capacity }}</td>
+        <td><button *ngIf="event.id" (click)="goToEventDetail(event.id)">Check event</button></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div *ngIf="!(events$ | async)?.length">
+    No events available.
+  </div>
+  

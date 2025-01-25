@@ -25,7 +25,7 @@ export class AuthService {
         const { password, ...safeUser } = user;
         return {
             user: safeUser,
-            access_token: this.jwtService.sign(payload, {secret: JWT_SECRET.secret, expiresIn: JWT_EXPIRATION.time}),
+            access_token: this.jwtService.sign(payload, {secret:  JWT_SECRET.secret, expiresIn: JWT_EXPIRATION.time}),
         };
     }
 }

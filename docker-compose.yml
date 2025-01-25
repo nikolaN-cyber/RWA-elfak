@@ -1,0 +1,58 @@
+services:
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Nikola24@
+      POSTGRES_DB: eventplanner
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./server
+    environment:
+      ENV: docker
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: Nikola24@
+      DATABASE_NAME: eventplanner
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./client
+    ports:
+      - "4200:4200"
+    networks:
+      - app-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+    driver: local
